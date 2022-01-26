@@ -21,9 +21,9 @@ spec:
   runtime: nodejs14
   source: "const { v4: uuidv4 } = require('uuid');\nmodule.exports = { \n  main: function
     (event, context) {\n    const payload={\n      uuid: uuidv4(),\n      check_in:
-    {\n        fun0: new Date(),\n      },\n      fibo: {},\n    };\n    const eventType
-    = process.env['PUSH-TO-EVENTTYPE'];\n    const eventSource = process.env['CE-SOURCE'];\n\n
-    \   var eventOut=event.buildResponseCloudEvent(uuidv4(),eventType,payload);\n
+    {\n        fun0: new Date(),\n      },\n      fibo: {\n        fun0: 0,\n      },\n
+    \   };\n    const eventType = process.env['PUSH-TO-EVENTTYPE'];\n    const eventSource
+    = process.env['CE-SOURCE'];\n\n    var eventOut=event.buildResponseCloudEvent(uuidv4(),eventType,payload);\n
     \   eventOut.source=eventSource\n    eventOut.specversion=\"1.0\"\n\n    event.publishCloudEvent(eventOut);\n
     \   console.log(`Payload pushed to ${eventType}`,eventOut)\n    return eventOut;\n
     \ }\n}"

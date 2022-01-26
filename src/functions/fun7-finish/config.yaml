@@ -1,0 +1,24 @@
+name: fun7-finish
+namespace: default
+runtime: nodejs14
+source:
+    sourceType: inline
+subscriptions:
+    - name: fun7-finish
+      protocol: ""
+      filter:
+        filters:
+            - eventSource:
+                property: source
+                type: exact
+                value: ""
+              eventType:
+                property: type
+                type: exact
+                value: sap.kyma.custom.ready.for.fun7.v1
+env:
+    - name: FUNCTION_MAX_INDEX
+      valueFrom:
+        configMapKeyRef:
+            name: workflow-config
+            key: last-function-index

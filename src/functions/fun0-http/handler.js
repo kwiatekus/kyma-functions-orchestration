@@ -6,7 +6,9 @@ module.exports = {
       check_in: {
         fun0: new Date(),
       },
-      fibo: {},
+      fibo: {
+        fun0: 0,
+      },
     };
     const eventType = process.env['PUSH-TO-EVENTTYPE'];
     const eventSource = process.env['CE-SOURCE'];

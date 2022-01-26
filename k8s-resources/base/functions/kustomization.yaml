@@ -5,3 +5,4 @@ resources:
 - fun3-git-node-public.yaml
 - fun4-azuredevops-node-ssh.yaml
 - fun5-azuredevops-node-basic.yaml
+- fun7-finish.yaml
