@@ -1,0 +1,19 @@
+generatorOptions:
+  disableNameSuffixHash: true
+resources:
+- namespace.yaml
+- fun6-external-docker-registry.yaml
+namespace: external-docker-registry
+secretGenerator:
+- name: serverless-registry-config
+  type: kubernetes.io/dockerconfigjson
+  envs:
+  - dockerconfig.env
+patches:
+- patch: |-
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: serverless-registry-config
+      labels:
+        serverless.kyma-project.io/remote-registry: config 

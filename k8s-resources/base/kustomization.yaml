@@ -5,4 +5,4 @@ resources:
 - function-computation-config.yaml
 - secrets
 - functions
-namespace: default
+- external-docker-registry

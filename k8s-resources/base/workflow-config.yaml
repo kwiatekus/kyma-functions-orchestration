@@ -10,3 +10,4 @@
     fun3-publish-event-type: "sap.kyma.custom.ready.for.fun4.v1"
     fun4-publish-event-type: "sap.kyma.custom.ready.for.fun5.v1"
     fun5-publish-event-type: "sap.kyma.custom.ready.for.fun6.v1"
+    fun6-publish-event-type: "sap.kyma.custom.ready.for.fun7.v1"
