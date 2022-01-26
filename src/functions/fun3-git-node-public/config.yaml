@@ -5,7 +5,7 @@ source:
     sourceType: git
     url: https://github.com/kwiatekus/kyma-functions-orchestration.git
     repository: kyma-functions-orchestration-repo
-    reference: master
+    reference: main
     baseDir: /src/functions/fun3-git-node-public/
 subscriptions:
     - name: fun3-git-node-public
