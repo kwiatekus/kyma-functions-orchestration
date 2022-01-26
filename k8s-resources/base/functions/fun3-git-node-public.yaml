@@ -32,7 +32,7 @@ spec:
       configMapKeyRef:
         key: nodeFibonacciMax
         name: function-computation-config
-  reference: master
+  reference: main
   runtime: nodejs14
   source: kyma-functions-orchestration-repo
   type: git
