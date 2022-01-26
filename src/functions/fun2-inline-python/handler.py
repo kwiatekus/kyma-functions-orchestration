@@ -4,8 +4,8 @@ import json
 
 def main(event, context):
     payload=event['data']
-    if isinstance(payload, str):
-        payload=json.loads(payload)
+    if isinstance(payload, (bytes, bytearray)):
+        payload=json.loads(str(payload, "utf-8"))
     checkin=payload['check_in']
     fibo=payload['fibo']
     checkin['fun2']=datetime.datetime.now().isoformat()
