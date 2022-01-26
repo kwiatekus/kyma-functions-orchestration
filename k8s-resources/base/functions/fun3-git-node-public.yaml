@@ -2,10 +2,10 @@ apiVersion: serverless.kyma-project.io/v1alpha1
 kind: GitRepository
 metadata:
   creationTimestamp: null
-  name: sample-lambdas-public-repo
+  name: kyma-functions-orchestration-repo
   namespace: default
 spec:
-  url: https://github.com/kwiatekus/sample-lambda.git
+  url: https://github.com/kwiatekus/kyma-functions-orchestration.git
 
 ---
 apiVersion: serverless.kyma-project.io/v1alpha1
@@ -15,7 +15,7 @@ metadata:
   name: fun3-git-node-public
   namespace: default
 spec:
-  baseDir: /demo-functions/resolve-after-random-fn
+  baseDir: /src/functions/fun3-git-node-public/
   env:
   - name: PUSH_EVENT_TYPE
     valueFrom:
@@ -34,7 +34,7 @@ spec:
         name: function-computation-config
   reference: master
   runtime: nodejs14
-  source: sample-lambdas-public-repo
+  source: kyma-functions-orchestration-repo
   type: git
 
 ---
