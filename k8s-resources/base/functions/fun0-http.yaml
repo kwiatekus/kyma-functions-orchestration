@@ -1,0 +1,50 @@
+apiVersion: serverless.kyma-project.io/v1alpha1
+kind: Function
+metadata:
+  creationTimestamp: null
+  name: fun0-http
+  namespace: default
+spec:
+  deps: "{ \n  \"name\": \"fun0-http\",\n  \"version\": \"1.0.0\",\n  \"dependencies\":
+    {\n    \"uuidv4\": \"6.2.12\"\n  }\n}"
+  env:
+  - name: CE-SOURCE
+    valueFrom:
+      configMapKeyRef:
+        key: ce-source
+        name: workflow-config
+  - name: PUSH-TO-EVENTTYPE
+    valueFrom:
+      configMapKeyRef:
+        key: fun0-publish-event-type
+        name: workflow-config
+  runtime: nodejs14
+  source: "const { v4: uuidv4 } = require('uuid');\nmodule.exports = { \n  main: function
+    (event, context) {\n    const payload={\n      uuid: uuidv4(),\n      check_in:
+    {\n        fun0: new Date(),\n      },\n      fibo: {},\n    };\n    const eventType
+    = process.env['PUSH-TO-EVENTTYPE'];\n    const eventSource = process.env['CE-SOURCE'];\n\n
+    \   var eventOut=event.buildResponseCloudEvent(uuidv4(),eventType,payload);\n
+    \   eventOut.source=eventSource\n    eventOut.specversion=\"1.0\"\n\n    event.publishCloudEvent(eventOut);\n
+    \   console.log(`Payload pushed to ${eventType}`,eventOut)\n    return eventOut;\n
+    \ }\n}"
+
+---
+apiVersion: gateway.kyma-project.io/v1alpha1
+kind: APIRule
+metadata:
+  creationTimestamp: null
+  name: fun0-http
+  namespace: default
+spec:
+  gateway: kyma-gateway.kyma-system.svc.cluster.local
+  rules:
+  - accessStrategies:
+    - handler: allow
+    methods:
+    - GET
+    path: /.*
+  service:
+    host: input
+    name: fun0-http
+    port: 80
+

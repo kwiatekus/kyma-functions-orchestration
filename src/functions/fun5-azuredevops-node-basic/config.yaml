@@ -1,0 +1,40 @@
+name: fun5-azure-devops-node-basic
+namespace: default
+runtime: nodejs14
+source:
+    sourceType: git
+    repository: azure-devops-basic
+    reference: main
+    baseDir: /fun4-azure-devops-node
+    credentialsSecretName: azure-repo-basic
+    credentialsType: basic
+    url: https://kyma-wookiee@dev.azure.com/kyma-wookiee/kyma-function/_git/azure-devops-sample2
+subscriptions:
+    - name: fun5-azure-devops-node
+      protocol: ""
+      filter:
+        filters:
+            - eventSource:
+                property: source
+                type: exact
+                value: ""
+              eventType:
+                property: type
+                type: exact
+                value: sap.kyma.custom.ready.for.fun5.v1
+env:
+    - name: PUSH_EVENT_TYPE
+      valueFrom:
+        configMapKeyRef:
+            name: workflow-config
+            key: fun5-publish-event-type
+    - name: FIBONACCI_MIN
+      valueFrom:
+        configMapKeyRef:
+            name: function-computation-config
+            key: nodeFibonacciMin
+    - name: FIBONACCI_MAX
+      valueFrom:
+        configMapKeyRef:
+            name: function-computation-config
+            key: nodeFibonacciMax             

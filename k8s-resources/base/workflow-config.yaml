@@ -1,0 +1,12 @@
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: workflow-config
+  data: 
+    ce-source: "kyma"
+    fun0-publish-event-type: "sap.kyma.custom.ready.for.fun1.v1"
+    fun1-publish-event-type: "sap.kyma.custom.ready.for.fun2.v1"
+    fun2-publish-event-type: "sap.kyma.custom.ready.for.fun3.v1"
+    fun3-publish-event-type: "sap.kyma.custom.ready.for.fun4.v1"
+    fun4-publish-event-type: "sap.kyma.custom.ready.for.fun5.v1"
+    fun5-publish-event-type: "sap.kyma.custom.ready.for.fun6.v1"

@@ -1,0 +1,10 @@
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: function-computation-config
+  data:
+    nodeFibonacciMin: "100"
+    nodeFibonacciMax: "120"
+    pythonFibonacci: "13"
+
+    

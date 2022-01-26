@@ -1,0 +1,8 @@
+resources:
+- busybox.yaml
+- load-config.yaml
+- workflow-config.yaml
+- function-computation-config.yaml
+- secrets
+- functions
+namespace: default

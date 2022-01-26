@@ -1,0 +1,4 @@
+src/archived/**
+*.env
+**/key
+deploy.sh

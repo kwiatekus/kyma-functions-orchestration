@@ -1,0 +1,18 @@
+resources:
+- ../../base
+patchesStrategicMerge:
+  - config.yaml
+  - workflow-config.yaml
+secretGenerator:
+- name: kk-ems-instance-stage
+  envs:
+  - data.env
+patches:
+- patch: |-
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: kk-ems-instance-stage
+      labels:
+        kyma-project.io/eventing-backend: beb 
+

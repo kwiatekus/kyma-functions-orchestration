@@ -1,0 +1,40 @@
+name: fun4-azure-devops-node-ssh
+namespace: default
+runtime: nodejs14
+source:
+    sourceType: git
+    repository: azure-devops-ssh
+    reference: main
+    baseDir: /fun3-azure-devops-node
+    url: git@ssh.dev.azure.com:v3/kyma-wookiee/kyma-function/azure-devops-sample-function
+    credentialsSecretName: azure-repo-ssh-key
+    credentialsType: key
+subscriptions:
+    - name: fun4-azure-devops-node
+      protocol: ""
+      filter:
+        filters:
+            - eventSource:
+                property: source
+                type: exact
+                value: ""
+              eventType:
+                property: type
+                type: exact
+                value: sap.kyma.custom.ready.for.fun4.v1
+env:
+    - name: PUSH_EVENT_TYPE
+      valueFrom:
+        configMapKeyRef:
+            name: workflow-config
+            key: fun4-publish-event-type
+    - name: FIBONACCI_MIN
+      valueFrom:
+        configMapKeyRef:
+            name: function-computation-config
+            key: nodeFibonacciMin
+    - name: FIBONACCI_MAX
+      valueFrom:
+        configMapKeyRef:
+            name: function-computation-config
+            key: nodeFibonacciMax          

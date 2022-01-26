@@ -1,0 +1,64 @@
+apiVersion: serverless.kyma-project.io/v1alpha1
+kind: GitRepository
+metadata:
+  creationTimestamp: null
+  name: azure-devops-ssh
+  namespace: default
+spec:
+  auth:
+    secretName: azure-repo-ssh-key
+    type: key
+  url: git@ssh.dev.azure.com:v3/kyma-wookiee/kyma-function/azure-devops-sample-function
+
+---
+apiVersion: serverless.kyma-project.io/v1alpha1
+kind: Function
+metadata:
+  creationTimestamp: null
+  name: fun4-azure-devops-node-ssh
+  namespace: default
+spec:
+  baseDir: /fun3-azure-devops-node
+  env:
+  - name: PUSH_EVENT_TYPE
+    valueFrom:
+      configMapKeyRef:
+        key: fun4-publish-event-type
+        name: workflow-config
+  - name: FIBONACCI_MIN
+    valueFrom:
+      configMapKeyRef:
+        key: nodeFibonacciMin
+        name: function-computation-config
+  - name: FIBONACCI_MAX
+    valueFrom:
+      configMapKeyRef:
+        key: nodeFibonacciMax
+        name: function-computation-config
+  reference: main
+  runtime: nodejs14
+  source: azure-devops-ssh
+  type: git
+
+---
+apiVersion: eventing.kyma-project.io/v1alpha1
+kind: Subscription
+metadata:
+  creationTimestamp: null
+  name: fun4-azure-devops-node
+  namespace: default
+spec:
+  filter:
+    filters:
+    - eventSource:
+        property: source
+        type: exact
+        value: ""
+      eventType:
+        property: type
+        type: exact
+        value: sap.kyma.custom.ready.for.fun4.v1
+  protocol: ""
+  protocolsettings: {}
+  sink: http://fun4-azure-devops-node-ssh.default.svc.cluster.local
+

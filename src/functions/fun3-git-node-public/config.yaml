@@ -1,0 +1,38 @@
+name: fun3-git-node-public
+namespace: default
+runtime: nodejs14
+source:
+    sourceType: git
+    url: https://github.com/kwiatekus/sample-lambda.git
+    repository: sample-lambdas-public-repo
+    reference: master
+    baseDir: /demo-functions/resolve-after-random-fn
+subscriptions:
+    - name: fun3-git-node-public
+      protocol: ""
+      filter:
+        filters:
+            - eventSource:
+                property: source
+                type: exact
+                value: ""
+              eventType:
+                property: type
+                type: exact
+                value: sap.kyma.custom.ready.for.fun3.v1
+env:
+    - name: PUSH_EVENT_TYPE
+      valueFrom:
+        configMapKeyRef:
+            name: workflow-config
+            key: fun3-publish-event-type
+    - name: FIBONACCI_MIN
+      valueFrom:
+        configMapKeyRef:
+            name: function-computation-config
+            key: nodeFibonacciMin
+    - name: FIBONACCI_MAX
+      valueFrom:
+        configMapKeyRef:
+            name: function-computation-config
+            key: nodeFibonacciMax

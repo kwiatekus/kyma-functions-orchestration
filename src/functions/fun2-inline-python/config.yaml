@@ -1,0 +1,25 @@
+name: fun2-inline-python
+runtime: python39
+namespace: default
+source:
+    sourceType: inline
+subscriptions:
+    - name: fun2-inline-python
+      protocol: ""
+      filter:
+        filters:
+            - eventSource:
+                property: source
+                type: exact
+                value: ""
+              eventType:
+                property: type
+                type: exact
+                value: sap.kyma.custom.ready.for.fun2.v1
+env:
+    - name: PUSH_EVENT_TYPE
+      valueFrom:
+        configMapKeyRef:
+            name: workflow-config
+            key: fun2-publish-event-type
+
