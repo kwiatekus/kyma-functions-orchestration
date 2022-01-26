@@ -3,7 +3,9 @@ import datetime
 import json
 
 def main(event, context):
-    payload=json.loads(event['data'])
+    payload=event['data']
+    if isinstance(payload, str):
+        payload=json.loads(payload)
     checkin=payload['check_in']
     fibo=payload['fibo']
     checkin['fun2']=datetime.datetime.now().isoformat()

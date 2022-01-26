@@ -1,8 +1,7 @@
 const fibonacci = require ('fibonacci');
 module.exports = {
     main: async function (event, context) {
-      const dataIn = sanitizeInput(event.data);
-      console.log(`Will wait ${waitTime}`);
+        const dataIn = sanitizeInput(event.data);
         var payload = {
             ...dataIn,
             check_in: {
@@ -14,11 +13,11 @@ module.exports = {
             fun3: fibonacci.iterate(between(parseInt(process.env['FIBONACCI_MIN'],10),parseInt(process.env['FIBONACCI_MAX'],10)))
             }
         };
-   
+
         var eventOut=event.buildResponseCloudEvent(payload.uuid,process.env['PUSH_EVENT_TYPE'],payload);
         event.publishCloudEvent(eventOut);
         console.log(`Payload [${payload.uuid}] pushed to ${process.env['PUSH_EVENT_TYPE']}`,payload)
-      return payload;
+        return payload;
     },
   };
 
