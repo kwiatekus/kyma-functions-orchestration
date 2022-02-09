@@ -4,4 +4,4 @@ namespace: kyma-system
 secretGenerator:
 - name: monitoring-auth-proxy-grafana-user
   envs:
-  - grafana-setup.env
+  - ias-setup.env

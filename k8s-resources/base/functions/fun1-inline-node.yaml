@@ -37,12 +37,13 @@ spec:
     \           fibo: {\n                ...sanitised.fibo,\n                fun1:
     fibonacci.iterate(between(parseInt(process.env['FIBONACCI_MIN'],10),parseInt(process.env['FIBONACCI_MAX'],10)))\n
     \           }\n        };\n        var eventOut=event.buildResponseCloudEvent(payload.uuid,process.env['PUSH_EVENT_TYPE'],payload);\n
-    \       event.publishCloudEvent(eventOut);\n        console.log(`Payload [${payload.uuid}]
-    pushed to ${process.env['PUSH_EVENT_TYPE']}`,payload)\n        return 'OK'\n    }\n}\n\nfunction
-    between(min, max) {\n    return Math.floor(Math.random() * (max - min) + min);\n}\n
-    \nfunction sanitizeInput(input) {\n    let sanitised = input;\n    console.log(\"Type
-    of incomming input : \"+ typeof sanitised);\n    if(typeof sanitised === 'string'){\n
-    \       return JSON.parse(sanitised);\n    }\n    return sanitised;\n}"
+    \       eventOut.datacontenttype=\"application/json\"\n        event.publishCloudEvent(eventOut);\n
+    \       console.log(`Payload [${payload.uuid}] pushed to ${process.env['PUSH_EVENT_TYPE']}`,payload)\n
+    \       return 'OK'\n    }\n}\n\nfunction between(min, max) {\n    return Math.floor(Math.random()
+    * (max - min) + min);\n}\n \nfunction sanitizeInput(input) {\n    let sanitised
+    = input;\n    console.log(\"Type of incomming input : \"+ typeof sanitised);\n
+    \   if(typeof sanitised === 'string'){\n        return JSON.parse(sanitised);\n
+    \   }\n    return sanitised;\n}"
 
 ---
 apiVersion: eventing.kyma-project.io/v1alpha1
