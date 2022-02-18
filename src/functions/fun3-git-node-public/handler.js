@@ -15,7 +15,6 @@ module.exports = {
         };
 
         var eventOut=event.buildResponseCloudEvent(payload.uuid,process.env['PUSH_EVENT_TYPE'],payload);
-        eventOut.datacontenttype="application/json"
         event.publishCloudEvent(eventOut);
         console.log(`Payload [${payload.uuid}] pushed to ${process.env['PUSH_EVENT_TYPE']}`,payload)
         return payload;
@@ -30,8 +29,5 @@ module.exports = {
   function sanitizeInput(input) {
     let sanitised = input;
     console.log("Type of incomming input : "+ typeof sanitised);
-    if(typeof sanitised === 'string'){
-        return JSON.parse(sanitised);
-    }
     return sanitised;
 }

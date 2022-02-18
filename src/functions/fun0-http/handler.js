@@ -16,7 +16,6 @@ module.exports = {
     var eventOut=event.buildResponseCloudEvent(uuidv4(),eventType,payload);
     eventOut.source=eventSource
     eventOut.specversion="1.0"
-    eventOut.datacontenttype="application/json"
 
     event.publishCloudEvent(eventOut);
     console.log(`Payload pushed to ${eventType}`,eventOut)

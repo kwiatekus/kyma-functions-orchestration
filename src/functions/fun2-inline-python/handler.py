@@ -12,7 +12,6 @@ def main(event, context):
     fibo['fun2']=recur_fibo(10)
     eventOut = event.buildResponseCloudEvent(payload['uuid'],os.environ['PUSH_EVENT_TYPE'],payload)
     print(eventOut)
-    eventOut['datacontenttype']="application/json"
     event.publishCloudEvent(eventOut)
     return "OK"
 
