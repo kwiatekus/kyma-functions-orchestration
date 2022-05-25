@@ -17,7 +17,7 @@ module.exports = {
 
         var eventOut=event.buildResponseCloudEvent(payload.uuid,process.env['PUSH_EVENT_TYPE'],payload);
         event.publishCloudEvent(eventOut);
-        console.log(`AKUKU: Payload [${payload.uuid}] pushed to ${process.env['PUSH_EVENT_TYPE']}`,payload)
+        console.log(`AKUKU2: Payload [${payload.uuid}] pushed to ${process.env['PUSH_EVENT_TYPE']}`,payload)
         return payload;
     },
   };
