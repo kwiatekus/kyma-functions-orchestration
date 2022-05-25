@@ -1,61 +1,61 @@
 apiVersion: serverless.kyma-project.io/v1alpha1
 kind: Function
 metadata:
-  creationTimestamp: null
-  name: fun2-inline-python
-  namespace: default
+    creationTimestamp: null
+    name: fun2-inline-python
+    namespace: default
 spec:
-  env:
-  - name: PUSH_EVENT_TYPE
-    valueFrom:
-      configMapKeyRef:
-        key: fun2-publish-event-type
-        name: workflow-config
-  runtime: python39
-  source: |-
-    import os
-    import datetime
-    import json
+    env:
+        - name: PUSH_EVENT_TYPE
+          valueFrom:
+            configMapKeyRef:
+                key: fun2-publish-event-type
+                name: workflow-config
+    runtime: python39
+    source: |-
+        import os
+        import datetime
+        import json
 
-    def main(event, context):
-        payload=event['data']
-        if isinstance(payload, (bytes, bytearray)):
-            payload=json.loads(str(payload, "utf-8"))
-        checkin=payload['check_in']
-        fibo=payload['fibo']
-        checkin['fun2']=datetime.datetime.now().isoformat()
-        fibo['fun2']=recur_fibo(10)
-        eventOut = event.buildResponseCloudEvent(payload['uuid'],os.environ['PUSH_EVENT_TYPE'],payload)
-        print(eventOut)
-        event.publishCloudEvent(eventOut)
-        return "OK"
+        def main(event, context):
+            payload=event['data']
+            if isinstance(payload, (bytes, bytearray)):
+                payload=json.loads(str(payload, "utf-8"))
+            checkin=payload['check_in']
+            fibo=payload['fibo']
+            checkin['fun2']=datetime.datetime.now().isoformat()
+            fibo['fun2']=recur_fibo(10)
+            eventOut = event.buildResponseCloudEvent(payload['uuid'],os.environ['PUSH_EVENT_TYPE'],payload)
+            print(eventOut)
+            event.publishCloudEvent(eventOut)
+            return "OK"
 
 
-    def recur_fibo(n):
-       if n <= 1:
-           return n
-       else:
-           return(recur_fibo(n-1) + recur_fibo(n-2))
+        def recur_fibo(n):
+           if n <= 1:
+               return n
+           else:
+               return(recur_fibo(n-1) + recur_fibo(n-2))
 
 ---
 apiVersion: eventing.kyma-project.io/v1alpha1
 kind: Subscription
 metadata:
-  creationTimestamp: null
-  name: fun2-inline-python
-  namespace: default
+    creationTimestamp: null
+    name: fun2-inline-python
+    namespace: default
 spec:
-  filter:
-    filters:
-    - eventSource:
-        property: source
-        type: exact
-        value: ""
-      eventType:
-        property: type
-        type: exact
-        value: sap.kyma.custom.ready.for.fun2.v1
-  protocol: ""
-  protocolsettings: {}
-  sink: http://fun2-inline-python.default.svc.cluster.local
+    filter:
+        filters:
+            - eventSource:
+                property: source
+                type: exact
+                value: ""
+              eventType:
+                property: type
+                type: exact
+                value: sap.kyma.custom.ready.for.fun2.v1
+    protocol: ""
+    protocolsettings: {}
+    sink: http://fun2-inline-python.default.svc.cluster.local
 

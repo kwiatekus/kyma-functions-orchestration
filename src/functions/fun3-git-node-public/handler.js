@@ -1,4 +1,5 @@
 const fibonacci = require ('fibonacci');
+
 module.exports = {
     main: async function (event, context) {
         const dataIn = sanitizeInput(event.data);
@@ -16,7 +17,7 @@ module.exports = {
 
         var eventOut=event.buildResponseCloudEvent(payload.uuid,process.env['PUSH_EVENT_TYPE'],payload);
         event.publishCloudEvent(eventOut);
-        console.log(`Payload [${payload.uuid}] pushed to ${process.env['PUSH_EVENT_TYPE']}`,payload)
+        console.log(`AKUKU: Payload [${payload.uuid}] pushed to ${process.env['PUSH_EVENT_TYPE']}`,payload)
         return payload;
     },
   };

@@ -5,3 +5,6 @@ secretGenerator:
 - name: monitoring-auth-proxy-grafana-user
   envs:
   - auth0-setup.env
+- name: tracing-auth-proxy-user
+  envs:
+  - auth0-setup.env

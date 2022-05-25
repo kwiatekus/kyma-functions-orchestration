@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
+require('axios');
 module.exports = { 
   main: function (event, context) {
     const payload={
@@ -17,7 +18,17 @@ module.exports = {
     eventOut.source=eventSource
     eventOut.specversion="1.0"
 
-    event.publishCloudEvent(eventOut);
+    let request = event.publishCloudEvent(eventOut);
+    request.then((response)=>{
+
+      console.log(response.request._headers);
+      console.log(response.headers);
+    }).catch((e)=>{
+      console.error(e)
+    })
+
+    console.log(request)
+
     console.log(`Payload pushed to ${eventType}`,eventOut)
     return eventOut;
   }

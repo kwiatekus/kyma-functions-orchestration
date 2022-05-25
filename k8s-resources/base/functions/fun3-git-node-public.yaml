@@ -1,61 +1,61 @@
 apiVersion: serverless.kyma-project.io/v1alpha1
 kind: GitRepository
 metadata:
-  creationTimestamp: null
-  name: kyma-functions-orchestration-repo
-  namespace: default
+    creationTimestamp: null
+    name: kyma-functions-orchestration-repo
+    namespace: default
 spec:
-  url: https://github.com/kwiatekus/kyma-functions-orchestration.git
+    url: https://github.com/kwiatekus/kyma-functions-orchestration.git
 
 ---
 apiVersion: serverless.kyma-project.io/v1alpha1
 kind: Function
 metadata:
-  creationTimestamp: null
-  name: fun3-git-node-public
-  namespace: default
+    creationTimestamp: null
+    name: fun3-git-node-public
+    namespace: default
 spec:
-  baseDir: /src/functions/fun3-git-node-public/
-  env:
-  - name: PUSH_EVENT_TYPE
-    valueFrom:
-      configMapKeyRef:
-        key: fun3-publish-event-type
-        name: workflow-config
-  - name: FIBONACCI_MIN
-    valueFrom:
-      configMapKeyRef:
-        key: nodeFibonacciMin
-        name: function-computation-config
-  - name: FIBONACCI_MAX
-    valueFrom:
-      configMapKeyRef:
-        key: nodeFibonacciMax
-        name: function-computation-config
-  reference: main
-  runtime: nodejs14
-  source: kyma-functions-orchestration-repo
-  type: git
+    baseDir: /src/functions/fun3-git-node-public/
+    env:
+        - name: PUSH_EVENT_TYPE
+          valueFrom:
+            configMapKeyRef:
+                key: fun3-publish-event-type
+                name: workflow-config
+        - name: FIBONACCI_MIN
+          valueFrom:
+            configMapKeyRef:
+                key: nodeFibonacciMin
+                name: function-computation-config
+        - name: FIBONACCI_MAX
+          valueFrom:
+            configMapKeyRef:
+                key: nodeFibonacciMax
+                name: function-computation-config
+    reference: main
+    runtime: nodejs14
+    source: kyma-functions-orchestration-repo
+    type: git
 
 ---
 apiVersion: eventing.kyma-project.io/v1alpha1
 kind: Subscription
 metadata:
-  creationTimestamp: null
-  name: fun3-git-node-public
-  namespace: default
+    creationTimestamp: null
+    name: fun3-git-node-public
+    namespace: default
 spec:
-  filter:
-    filters:
-    - eventSource:
-        property: source
-        type: exact
-        value: ""
-      eventType:
-        property: type
-        type: exact
-        value: sap.kyma.custom.ready.for.fun3.v1
-  protocol: ""
-  protocolsettings: {}
-  sink: http://fun3-git-node-public.default.svc.cluster.local
+    filter:
+        filters:
+            - eventSource:
+                property: source
+                type: exact
+                value: ""
+              eventType:
+                property: type
+                type: exact
+                value: sap.kyma.custom.ready.for.fun3.v1
+    protocol: ""
+    protocolsettings: {}
+    sink: http://fun3-git-node-public.default.svc.cluster.local
 

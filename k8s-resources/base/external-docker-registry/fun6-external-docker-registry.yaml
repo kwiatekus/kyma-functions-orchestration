@@ -10,7 +10,8 @@ spec:
       "name": "fun6-external-docker-registry",
       "version": "0.0.1",
       "dependencies": {
-        "fibonacci":"1.6.10"
+        "fibonacci":"1.6.10",
+        "axios": "^0.21.1"
       }
     }
   env:
@@ -23,6 +24,7 @@ spec:
   runtime: nodejs14
   source: |-
     const fibonacci = require ('fibonacci');
+    require('axios');
 
     module.exports = {
         main: function (event, context) {

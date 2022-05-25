@@ -1,67 +1,57 @@
 apiVersion: serverless.kyma-project.io/v1alpha1
 kind: Function
 metadata:
-  creationTimestamp: null
-  name: fun1-inline-node14
-  namespace: default
+    creationTimestamp: null
+    name: fun1-inline-node14
+    namespace: default
 spec:
-  deps: |-
-    {
-      "name": "function-beautiful-damian4",
-      "version": "0.0.1",
-      "dependencies": {
-        "fibonacci":"1.6.10"
-      }
-    }
-  env:
-  - name: PUSH_EVENT_TYPE
-    valueFrom:
-      configMapKeyRef:
-        key: fun1-publish-event-type
-        name: workflow-config
-  - name: FIBONACCI_MIN
-    valueFrom:
-      configMapKeyRef:
-        key: nodeFibonacciMin
-        name: function-computation-config
-  - name: FIBONACCI_MAX
-    valueFrom:
-      configMapKeyRef:
-        key: nodeFibonacciMax
-        name: function-computation-config
-  runtime: nodejs14
-  source: "const fibonacci = require ('fibonacci');\n\nmodule.exports = {\n    main:
-    function (event, context) {\n        let sanitised = sanitizeInput(event.data)\n
-    \       var payload = {\n            ...sanitised,\n            check_in: {\n
-    \               ...sanitised.check_in,\n                fun1: new Date(),\n            },\n
-    \           fibo: {\n                ...sanitised.fibo,\n                fun1:
-    fibonacci.iterate(between(parseInt(process.env['FIBONACCI_MIN'],10),parseInt(process.env['FIBONACCI_MAX'],10)))\n
-    \           }\n        };\n        var eventOut=event.buildResponseCloudEvent(payload.uuid,process.env['PUSH_EVENT_TYPE'],payload);\n
-    \       event.publishCloudEvent(eventOut);\n        console.log(`Payload [${payload.uuid}]
-    pushed to ${process.env['PUSH_EVENT_TYPE']}`,payload)\n        return 'OK'\n    }\n}\n\nfunction
-    between(min, max) {\n    return Math.floor(Math.random() * (max - min) + min);\n}\n
-    \nfunction sanitizeInput(input) {\n    let sanitised = input;\n    console.log(\"Type
-    of incomming input : \"+ typeof sanitised);\n    return sanitised;\n}"
+    deps: |-
+        {
+          "name": "function-beautiful-damian4",
+          "version": "0.0.1",
+          "dependencies": {
+            "fibonacci":"1.6.10",
+            "axios": "^0.21.1"
+          }
+        }
+    env:
+        - name: PUSH_EVENT_TYPE
+          valueFrom:
+            configMapKeyRef:
+                key: fun1-publish-event-type
+                name: workflow-config
+        - name: FIBONACCI_MIN
+          valueFrom:
+            configMapKeyRef:
+                key: nodeFibonacciMin
+                name: function-computation-config
+        - name: FIBONACCI_MAX
+          valueFrom:
+            configMapKeyRef:
+                key: nodeFibonacciMax
+                name: function-computation-config
+    runtime: nodejs14
+    source: "const fibonacci = require ('fibonacci');\nrequire('axios');\nmodule.exports = {\n    main: function (event, context) {\n        let sanitised = sanitizeInput(event.data)\n        var payload = {\n            ...sanitised,\n            check_in: {\n                ...sanitised.check_in,\n                fun1: new Date(),\n            },\n            fibo: {\n                ...sanitised.fibo,\n                fun1: fibonacci.iterate(between(parseInt(process.env['FIBONACCI_MIN'],10),parseInt(process.env['FIBONACCI_MAX'],10)))\n            }\n        };\n        var eventOut=event.buildResponseCloudEvent(payload.uuid,process.env['PUSH_EVENT_TYPE'],payload);\n        event.publishCloudEvent(eventOut);\n        console.log(`Payload [${payload.uuid}] pushed to ${process.env['PUSH_EVENT_TYPE']}`,payload)\n        return 'OK'\n    }\n}\n\nfunction between(min, max) {\n    return Math.floor(Math.random() * (max - min) + min);\n}\n \nfunction sanitizeInput(input) {\n    let sanitised = input;\n    console.log(\"Type of incomming input : \"+ typeof sanitised);\n    return sanitised;\n}"
 
 ---
 apiVersion: eventing.kyma-project.io/v1alpha1
 kind: Subscription
 metadata:
-  creationTimestamp: null
-  name: fun1-inline-node14
-  namespace: default
+    creationTimestamp: null
+    name: fun1-inline-node14
+    namespace: default
 spec:
-  filter:
-    filters:
-    - eventSource:
-        property: source
-        type: exact
-        value: ""
-      eventType:
-        property: type
-        type: exact
-        value: sap.kyma.custom.ready.for.fun1.v1
-  protocol: ""
-  protocolsettings: {}
-  sink: http://fun1-inline-node14.default.svc.cluster.local
+    filter:
+        filters:
+            - eventSource:
+                property: source
+                type: exact
+                value: ""
+              eventType:
+                property: type
+                type: exact
+                value: sap.kyma.custom.ready.for.fun1.v1
+    protocol: ""
+    protocolsettings: {}
+    sink: http://fun1-inline-node14.default.svc.cluster.local
 

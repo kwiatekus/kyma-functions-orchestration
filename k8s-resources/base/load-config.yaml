@@ -3,4 +3,4 @@
   metadata:
     name: load-config
   data: 
-    sleepSeconds: "2"
+    sleepSeconds: "15"

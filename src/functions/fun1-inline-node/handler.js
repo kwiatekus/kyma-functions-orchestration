@@ -1,5 +1,5 @@
 const fibonacci = require ('fibonacci');
-
+require('axios');
 module.exports = {
     main: function (event, context) {
         let sanitised = sanitizeInput(event.data)
