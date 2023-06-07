@@ -16,4 +16,5 @@ patches:
     metadata:
       name: serverless-registry-config
       labels:
-        serverless.kyma-project.io/remote-registry: config 
+        serverless.kyma-project.io/remote-registry: config
+        serverless.kyma-project.io/config: credentials 

@@ -1,6 +1,6 @@
 name: fun3-git-node-public
 namespace: default
-runtime: nodejs14
+runtime: nodejs18
 source:
     sourceType: git
     url: https://github.com/kwiatekus/kyma-functions-orchestration.git

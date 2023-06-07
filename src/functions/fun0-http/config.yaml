@@ -1,6 +1,6 @@
 name: fun0-http
 namespace: default
-runtime: nodejs14
+runtime: nodejs18
 source:
     sourceType: inline
 apiRules:

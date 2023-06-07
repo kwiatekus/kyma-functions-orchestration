@@ -1,6 +1,6 @@
 name: fun4-azure-devops-node-ssh
 namespace: default
-runtime: nodejs14
+runtime: nodejs18
 source:
     sourceType: git
     repository: azure-devops-ssh

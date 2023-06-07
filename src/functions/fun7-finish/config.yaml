@@ -1,6 +1,6 @@
 name: fun7-finish
 namespace: default
-runtime: nodejs14
+runtime: nodejs18
 source:
     sourceType: inline
 subscriptions:

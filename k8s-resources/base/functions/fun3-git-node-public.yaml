@@ -1,21 +1,12 @@
-apiVersion: serverless.kyma-project.io/v1alpha1
-kind: GitRepository
-metadata:
-    creationTimestamp: null
-    name: kyma-functions-orchestration-repo
-    namespace: default
-spec:
-    url: https://github.com/kwiatekus/kyma-functions-orchestration.git
-
----
-apiVersion: serverless.kyma-project.io/v1alpha1
+apiVersion: serverless.kyma-project.io/v1alpha2
 kind: Function
 metadata:
     creationTimestamp: null
+    labels:
+        app.kubernetes.io/name: fun3-git-node-public
     name: fun3-git-node-public
     namespace: default
 spec:
-    baseDir: /src/functions/fun3-git-node-public/
     env:
         - name: PUSH_EVENT_TYPE
           valueFrom:
@@ -32,10 +23,12 @@ spec:
             configMapKeyRef:
                 key: nodeFibonacciMax
                 name: function-computation-config
-    reference: main
-    runtime: nodejs14
-    source: kyma-functions-orchestration-repo
-    type: git
+    runtime: nodejs18
+    source:
+        gitRepository:
+            baseDir: /src/functions/fun3-git-node-public/
+            reference: main
+            url: https://github.com/kwiatekus/kyma-functions-orchestration.git
 
 ---
 apiVersion: eventing.kyma-project.io/v1alpha1

@@ -1,24 +1,12 @@
-apiVersion: serverless.kyma-project.io/v1alpha1
-kind: GitRepository
-metadata:
-    creationTimestamp: null
-    name: azure-devops-basic
-    namespace: default
-spec:
-    auth:
-        secretName: azure-repo-basic
-        type: basic
-    url: https://kyma-wookiee@dev.azure.com/kyma-wookiee/kyma-function/_git/azure-devops-sample2
-
----
-apiVersion: serverless.kyma-project.io/v1alpha1
+apiVersion: serverless.kyma-project.io/v1alpha2
 kind: Function
 metadata:
     creationTimestamp: null
+    labels:
+        app.kubernetes.io/name: fun5-azure-devops-node-basic
     name: fun5-azure-devops-node-basic
     namespace: default
 spec:
-    baseDir: /fun4-azure-devops-node
     env:
         - name: PUSH_EVENT_TYPE
           valueFrom:
@@ -35,10 +23,15 @@ spec:
             configMapKeyRef:
                 key: nodeFibonacciMax
                 name: function-computation-config
-    reference: main
-    runtime: nodejs14
-    source: azure-devops-basic
-    type: git
+    runtime: nodejs18
+    source:
+        gitRepository:
+            auth:
+                secretName: azure-repo-basic
+                type: basic
+            baseDir: /fun4-azure-devops-node
+            reference: main
+            url: https://kyma-wookiee@dev.azure.com/kyma-wookiee/kyma-function/_git/azure-devops-sample2
 
 ---
 apiVersion: eventing.kyma-project.io/v1alpha1

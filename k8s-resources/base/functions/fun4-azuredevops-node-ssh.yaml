@@ -1,24 +1,12 @@
-apiVersion: serverless.kyma-project.io/v1alpha1
-kind: GitRepository
-metadata:
-    creationTimestamp: null
-    name: azure-devops-ssh
-    namespace: default
-spec:
-    auth:
-        secretName: azure-repo-ssh-key
-        type: key
-    url: git@ssh.dev.azure.com:v3/kyma-wookiee/kyma-function/azure-devops-sample-function
-
----
-apiVersion: serverless.kyma-project.io/v1alpha1
+apiVersion: serverless.kyma-project.io/v1alpha2
 kind: Function
 metadata:
     creationTimestamp: null
+    labels:
+        app.kubernetes.io/name: fun4-azure-devops-node-ssh
     name: fun4-azure-devops-node-ssh
     namespace: default
 spec:
-    baseDir: /fun3-azure-devops-node
     env:
         - name: PUSH_EVENT_TYPE
           valueFrom:
@@ -35,10 +23,15 @@ spec:
             configMapKeyRef:
                 key: nodeFibonacciMax
                 name: function-computation-config
-    reference: main
-    runtime: nodejs14
-    source: azure-devops-ssh
-    type: git
+    runtime: nodejs18
+    source:
+        gitRepository:
+            auth:
+                secretName: azure-repo-ssh-key
+                type: key
+            baseDir: /fun3-azure-devops-node
+            reference: main
+            url: git@ssh.dev.azure.com:v3/kyma-wookiee/kyma-function/azure-devops-sample-function
 
 ---
 apiVersion: eventing.kyma-project.io/v1alpha1

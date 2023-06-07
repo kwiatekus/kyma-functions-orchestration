@@ -3,4 +3,4 @@
   metadata:
     name: load-config
   data: 
-    targetUrl: "https://input.kk-upgrade-tst.wookiee.shoot.canary.k8s-hana.ondemand.com"
+    targetUrl: "https://input.c-79fa75b.dev.kyma.ondemand.com"

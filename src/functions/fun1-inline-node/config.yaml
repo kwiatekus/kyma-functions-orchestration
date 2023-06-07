@@ -1,6 +1,6 @@
 name: fun1-inline-node14
 namespace: default
-runtime: nodejs14
+runtime: nodejs18
 source:
     sourceType: inline
 subscriptions:
