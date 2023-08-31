@@ -3,4 +3,4 @@
   metadata:
     name: load-config
   data: 
-    targetUrl: "https://input.c-79fa75b.dev.kyma.ondemand.com"
+    targetUrl: "https://input.local.kyma.dev"

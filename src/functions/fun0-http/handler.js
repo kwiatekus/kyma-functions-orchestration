@@ -14,11 +14,7 @@ module.exports = {
     const eventType = process.env['PUSH-TO-EVENTTYPE'];
     const eventSource = process.env['CE-SOURCE'];
 
-    var eventOut=event.buildResponseCloudEvent(uuidv4(),eventType,payload);
-    eventOut.source=eventSource
-    eventOut.specversion="1.0"
-
-    let request = event.publishCloudEvent(eventOut);
+    let request = event.emitCloudEvent(eventType, eventSource, payload);
     request.then((response)=>{
 
       console.log(response.request._headers);
@@ -29,7 +25,7 @@ module.exports = {
 
     console.log(request)
 
-    console.log(`Payload pushed to ${eventType}`,eventOut)
-    return eventOut;
+    console.log(`Payload pushed to ${eventType}`,payload)
+    return payload;
   }
 }

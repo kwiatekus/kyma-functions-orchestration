@@ -14,8 +14,10 @@ module.exports = {
                 fun1: fibonacci.iterate(between(parseInt(process.env['FIBONACCI_MIN'],10),parseInt(process.env['FIBONACCI_MAX'],10)))
             }
         };
-        var eventOut=event.buildResponseCloudEvent(payload.uuid,process.env['PUSH_EVENT_TYPE'],payload);
-        event.publishCloudEvent(eventOut);
+        var source = event.extensions.request.get('ce-source')
+        var type = process.env['PUSH_EVENT_TYPE']
+
+        event.emitCloudEvent(type, source, payload)
         console.log(`Payload [${payload.uuid}] pushed to ${process.env['PUSH_EVENT_TYPE']}`,payload)
         return 'OK'
     }

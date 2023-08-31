@@ -10,9 +10,10 @@ def main(event, context):
     fibo=payload['fibo']
     checkin['fun2']=datetime.datetime.now().isoformat()
     fibo['fun2']=recur_fibo(10)
-    eventOut = event.buildResponseCloudEvent(payload['uuid'],os.environ['PUSH_EVENT_TYPE'],payload)
-    print(eventOut)
-    event.publishCloudEvent(eventOut)
+    eventSource = "kyma"
+    eventType = os.environ['PUSH_EVENT_TYPE']
+    event.emitCloudEvent(eventType, eventSource, payload)
+    print(payload)
     return "OK"
 
 

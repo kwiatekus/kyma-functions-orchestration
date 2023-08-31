@@ -15,9 +15,10 @@ module.exports = {
             }
         };
 
-        var eventOut=event.buildResponseCloudEvent(payload.uuid,process.env['PUSH_EVENT_TYPE'],payload);
-        event.publishCloudEvent(eventOut);
-        console.log(`AKUKU3: Payload [${payload.uuid}] pushed to ${process.env['PUSH_EVENT_TYPE']}`,payload)
+        var eventType = process.env['PUSH_EVENT_TYPE'];
+        var eventSource = 'kyma';
+        event.emitCloudEvent(eventType, eventSource, payload);
+        console.log(`Payload [${payload.uuid}] pushed to ${process.env['PUSH_EVENT_TYPE']}`,payload)
         return payload;
     },
   };
