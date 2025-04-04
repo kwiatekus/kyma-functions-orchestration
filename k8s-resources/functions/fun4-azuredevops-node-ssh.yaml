@@ -33,6 +33,6 @@ spec:
             url: git@ssh.dev.azure.com:v3/kyma-wookiee/kyma-function/azure-devops-sample-function
     resourceConfiguration:
       function:
-        profile: M
+        profile: XS
       build:
         profile: slow

@@ -25,7 +25,7 @@ spec:
     runtime: nodejs22
     resourceConfiguration:
       function:
-        profile: S
+        profile: XS
       build:
         profile: normal
     source:

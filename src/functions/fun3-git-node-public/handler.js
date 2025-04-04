@@ -18,8 +18,8 @@ module.exports = {
         var eventType = process.env['PUSH_EVENT_TYPE'];
         var eventSource = event.extensions.request.get('ce-source')
         event.emitCloudEvent(eventType, eventSource, payload);
-        console.log(`Payload [${payload.uuid}] pushed to ${process.env['PUSH_EVENT_TYPE']}`,payload)
-        return payload;
+        // console.log(`Payload [${payload.uuid}] pushed to ${process.env['PUSH_EVENT_TYPE']}`,payload)
+        return "OK";
     },
   };
 
@@ -29,6 +29,8 @@ module.exports = {
   }
   
   function sanitizeInput(input) {
+    console.log(input)
+
     let sanitised = input;
     console.log("Type of incomming input : "+ typeof sanitised);
     return sanitised;

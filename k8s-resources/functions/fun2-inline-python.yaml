@@ -16,18 +16,18 @@ spec:
         function:
             resources:
                 limits:
-                    cpu: 500m
-                    memory: 600Mi
+                    cpu: 300m
+                    memory: 400Mi
                 requests:
                     cpu: 20m
                     memory: 124Mi
         build:
             resources:
                 limits:
-                    cpu: 500m
-                    memory: 500Mi
+                    cpu: 300m
+                    memory: 400Mi
                 requests:
-                    cpu: 100m
+                    cpu: 50m
                     memory: 124Mi
     runtime: python312
     source:
@@ -46,11 +46,8 @@ spec:
                     checkin['fun2']=datetime.datetime.now().isoformat()
                     fibo['fun2']=recur_fibo(10)
                     extensions = event['extensions']
-                    print(extensions)
                     request = extensions['request']
-                    print(request)
                     eventSource = request.get_header('ce-source')
-                    print(eventSource)
                     eventType = os.environ['PUSH_EVENT_TYPE']
                     event.emitCloudEvent(eventType, eventSource, payload)
                     print(payload)

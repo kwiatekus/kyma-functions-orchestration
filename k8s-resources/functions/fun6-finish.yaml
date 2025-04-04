@@ -15,13 +15,38 @@ spec:
     runtime: nodejs22
     source:
         inline:
-            dependencies: |-
-                {
-                  "name": "function-great-artur6",
-                  "version": "0.0.1",
-                  "dependencies": {
-                  }
+            source: |-
+                module.exports = {    
+                    main: function (event, context) {
+                        if (!signInPassed(event.data)) {
+                            res = event.extensions.response;
+                            res.status(500)
+                            return
+                        }
+                        return "OK"
+                    }
                 }
-            source: "module.exports = {    \n    main: function (event, context) {\n        if (!signInPassed(event.data)) {\n            res = event.extensions.response;\n            res.status(500)\n            return\n        }\n        return \"OK\"\n    }\n}\n\n\nfunction signInPassed(payload) {\n    let passed = true;\n    let max = parseInt(process.env['FUNCTION_MAX_INDEX'],10)\n    for (let i = 0; i <= max; i++) {\n        if(!payload.check_in[`fun${i}`]){\n            console.log(`Fun${i} hasn't check in...`)\n            return false\n        }\n        if(payload.fibo[`fun${i}`]==undefined){\n            console.log(`Fun${i} hasn't calculated fibo...`)\n            return false\n        }\n        console.log(`Check for Fun${i} passed!`)\n    }\n    return passed;\n}\n"
-
+                
+                function signInPassed(payload) {
+                    let passed = true;
+                    let max = parseInt(process.env['FUNCTION_MAX_INDEX'],10)
+                    for (let i = 0; i <= max; i++) {
+                        if(!payload.check_in[`fun${i}`]){
+                            console.log(`Fun${i} hasn't check in...`)
+                            return false
+                        }
+                        if(payload.fibo[`fun${i}`]==undefined){
+                            console.log(`Fun${i} hasn't calculated fibo...`)
+                            return false
+                        }
+                        console.log(`Check for Fun${i} passed!`)
+                    }
+                    return passed;
+                }
+                       
+    resourceConfiguration:
+      function:
+        profile: S
+      build:
+        profile: slow
 

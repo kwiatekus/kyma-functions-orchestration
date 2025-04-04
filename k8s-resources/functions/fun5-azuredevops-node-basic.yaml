@@ -33,6 +33,6 @@ spec:
             url: https://kyma-wookiee@dev.azure.com/kyma-wookiee/kyma-function/_git/azure-devops-sample2
     resourceConfiguration:
       function:
-        profile: M
+        profile: XS
       build:
-        profile: fast
+        profile: normal
