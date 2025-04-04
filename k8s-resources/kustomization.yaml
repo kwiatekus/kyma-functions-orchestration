@@ -1,0 +1,8 @@
+resources:
+- namespaces.yaml
+- workflow-config.yaml
+- function-computation-config.yaml
+- secrets
+- functions
+- api-rules
+- subscriptions

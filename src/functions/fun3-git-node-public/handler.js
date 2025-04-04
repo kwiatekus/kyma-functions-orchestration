@@ -16,7 +16,7 @@ module.exports = {
         };
 
         var eventType = process.env['PUSH_EVENT_TYPE'];
-        var eventSource = 'kyma';
+        var eventSource = event.extensions.request.get('ce-source')
         event.emitCloudEvent(eventType, eventSource, payload);
         console.log(`Payload [${payload.uuid}] pushed to ${process.env['PUSH_EVENT_TYPE']}`,payload)
         return payload;

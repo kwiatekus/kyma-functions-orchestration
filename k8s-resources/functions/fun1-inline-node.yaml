@@ -1,0 +1,77 @@
+apiVersion: serverless.kyma-project.io/v1alpha2
+kind: Function
+metadata:
+    labels:
+        app.kubernetes.io/name: fun1-inline-node14
+    name: fun1-inline-node14
+    namespace: default
+spec:
+    env:
+        - name: PUSH_EVENT_TYPE
+          valueFrom:
+            configMapKeyRef:
+                key: fun1-publish-event-type
+                name: workflow-config
+        - name: FIBONACCI_MIN
+          valueFrom:
+            configMapKeyRef:
+                key: nodeFibonacciMin
+                name: function-computation-config
+        - name: FIBONACCI_MAX
+          valueFrom:
+            configMapKeyRef:
+                key: nodeFibonacciMax
+                name: function-computation-config
+    runtime: nodejs22
+    resourceConfiguration:
+      function:
+        profile: S
+      build:
+        profile: normal
+    source:
+        inline:
+            dependencies: |-
+                {
+                  "name": "function-beautiful-damian4",
+                  "version": "0.0.1",
+                  "dependencies": {
+                    "fibonacci":"1.6.10",
+                    "axios": "^0.21.1"
+                  }
+                }
+            source: |-
+              const fibonacci = require ('fibonacci');
+              require('axios');
+              module.exports = {
+                  main: function (event, context) {
+                      let sanitised = sanitizeInput(event.data)
+                      var payload = {
+                          ...sanitised,
+                          check_in: {
+                              ...sanitised.check_in,
+                              fun1: new Date(),
+                          },
+                          fibo: {
+                              ...sanitised.fibo,
+                              fun1: fibonacci.iterate(between(parseInt(process.env['FIBONACCI_MIN'],10),parseInt(process.env['FIBONACCI_MAX'],10)))
+                          }
+                      };
+                      var source = event.extensions.request.get('ce-source')
+                      var type = process.env['PUSH_EVENT_TYPE']
+
+                      event.emitCloudEvent(type, source, payload)
+                      console.log(`Payload [${payload.uuid}] pushed to ${process.env['PUSH_EVENT_TYPE']}`,payload)
+                      return 'OK'
+                  }
+              }
+
+              function between(min, max) {
+                  return Math.floor(Math.random() * (max - min) + min);
+              }
+              
+              function sanitizeInput(input) {
+                  let sanitised = input;
+                  console.log("Type of incomming input : "+ typeof sanitised);
+                  return sanitised;
+              }
+  

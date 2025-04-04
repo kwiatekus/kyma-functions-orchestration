@@ -1,6 +1,0 @@
-  apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    name: workflow-config
-  data: 
-    ce-source: "/default/sap.kyma/kk-ems"

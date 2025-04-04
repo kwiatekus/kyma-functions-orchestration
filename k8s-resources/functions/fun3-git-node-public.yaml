@@ -1,0 +1,47 @@
+apiVersion: serverless.kyma-project.io/v1alpha2
+kind: Function
+metadata:
+    labels:
+        app.kubernetes.io/name: fun3-git-node-public
+    name: fun3-git-node-public
+    namespace: default
+spec:
+    env:
+        - name: PUSH_EVENT_TYPE
+          valueFrom:
+            configMapKeyRef:
+                key: fun3-publish-event-type
+                name: workflow-config
+        - name: FIBONACCI_MIN
+          valueFrom:
+            configMapKeyRef:
+                key: nodeFibonacciMin
+                name: function-computation-config
+        - name: FIBONACCI_MAX
+          valueFrom:
+            configMapKeyRef:
+                key: nodeFibonacciMax
+                name: function-computation-config
+    runtime: nodejs22
+    source:
+        gitRepository:
+            baseDir: /src/functions/fun3-git-node-public/
+            reference: main
+            url: https://github.com/kwiatekus/kyma-functions-orchestration.git
+    resourceConfiguration:
+        function:
+            resources:
+                limits:
+                    cpu: 500m
+                    memory: 600Mi
+                requests:
+                    cpu: 20m
+                    memory: 124Mi
+        build:
+            resources:
+                limits:
+                    cpu: 500m
+                    memory: 500Mi
+                requests:
+                    cpu: 100m
+                    memory: 124Mi

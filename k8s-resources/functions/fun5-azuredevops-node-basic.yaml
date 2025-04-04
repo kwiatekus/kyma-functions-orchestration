@@ -1,0 +1,38 @@
+apiVersion: serverless.kyma-project.io/v1alpha2
+kind: Function
+metadata:
+    labels:
+        app.kubernetes.io/name: fun5-azure-devops-node-basic
+    name: fun5-azure-devops-node-basic
+    namespace: default
+spec:
+    env:
+        - name: PUSH_EVENT_TYPE
+          valueFrom:
+            configMapKeyRef:
+                key: fun5-publish-event-type
+                name: workflow-config
+        - name: FIBONACCI_MIN
+          valueFrom:
+            configMapKeyRef:
+                key: nodeFibonacciMin
+                name: function-computation-config
+        - name: FIBONACCI_MAX
+          valueFrom:
+            configMapKeyRef:
+                key: nodeFibonacciMax
+                name: function-computation-config
+    runtime: nodejs22
+    source:
+        gitRepository:
+            auth:
+                secretName: azure-repo-basic
+                type: basic
+            baseDir: /fun4-azure-devops-node
+            reference: main
+            url: https://kyma-wookiee@dev.azure.com/kyma-wookiee/kyma-function/_git/azure-devops-sample2
+    resourceConfiguration:
+      function:
+        profile: M
+      build:
+        profile: fast

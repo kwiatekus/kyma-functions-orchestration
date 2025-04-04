@@ -1,0 +1,9 @@
+apiVersion: eventing.kyma-project.io/v1alpha2
+kind: Subscription
+metadata:
+    name: fun4-azure-devops-node-ssh
+spec:
+    source: "testapp"
+    types:
+    - ready.for.fun4.v1
+    sink: http://fun4-azure-devops-node-ssh.default.svc.cluster.local

@@ -1,0 +1,11 @@
+apiVersion: eventing.kyma-project.io/v1alpha2
+kind: Subscription
+metadata:
+    name: fun3-git-node-public
+    namespace: default
+spec:
+    source: "testapp"
+    types:
+    - ready.for.fun3.v1
+    sink: http://fun3-git-node-public.default.svc.cluster.local
+

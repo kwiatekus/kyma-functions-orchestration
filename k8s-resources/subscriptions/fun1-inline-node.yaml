@@ -1,0 +1,11 @@
+apiVersion: eventing.kyma-project.io/v1alpha2
+kind: Subscription
+metadata:
+    name: fun1-inline-node14
+    namespace: default
+spec:
+    source: "testapp"
+    types:
+    - ready.for.fun1.v1
+    sink: http://fun1-inline-node14.default.svc.cluster.local
+  

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: busybee
+  name: busybee
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: busybee
+  template:
+    metadata:
+      labels:
+        app: busybee
+    spec:
+      containers:
+      - image: busybox
+        name: busybox
+        command:
+         - "/bin/sh"
+         - "-c"
+         - "--"
+        args:
+          - "while true; do sleep $SLEEP; wget -q -O- $URL > /dev/null ; done"
+        env:
+          - name: URL
+            valueFrom:
+              configMapKeyRef:
+                name: load-config
+                key: targetUrl
+          - name: SLEEP
+            valueFrom:
+              configMapKeyRef:
+                name: load-config
+                key: sleepSeconds

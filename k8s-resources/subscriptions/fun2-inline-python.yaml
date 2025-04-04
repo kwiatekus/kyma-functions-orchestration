@@ -1,0 +1,11 @@
+apiVersion: eventing.kyma-project.io/v1alpha2
+kind: Subscription
+metadata:
+    name: fun2-inline-python
+    namespace: default
+spec:
+    source: "testapp"
+    types:
+    - ready.for.fun2.v1
+    sink: http://fun2-inline-python.default.svc.cluster.local
+  

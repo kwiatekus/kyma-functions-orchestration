@@ -1,0 +1,38 @@
+apiVersion: serverless.kyma-project.io/v1alpha2
+kind: Function
+metadata:
+    labels:
+        app.kubernetes.io/name: fun4-azure-devops-node-ssh
+    name: fun4-azure-devops-node-ssh
+    namespace: default
+spec:
+    env:
+        - name: PUSH_EVENT_TYPE
+          valueFrom:
+            configMapKeyRef:
+                key: fun4-publish-event-type
+                name: workflow-config
+        - name: FIBONACCI_MIN
+          valueFrom:
+            configMapKeyRef:
+                key: nodeFibonacciMin
+                name: function-computation-config
+        - name: FIBONACCI_MAX
+          valueFrom:
+            configMapKeyRef:
+                key: nodeFibonacciMax
+                name: function-computation-config
+    runtime: nodejs22
+    source:
+        gitRepository:
+            auth:
+                secretName: azure-repo-ssh-key
+                type: key
+            baseDir: /fun3-azure-devops-node
+            reference: main
+            url: git@ssh.dev.azure.com:v3/kyma-wookiee/kyma-function/azure-devops-sample-function
+    resourceConfiguration:
+      function:
+        profile: M
+      build:
+        profile: slow

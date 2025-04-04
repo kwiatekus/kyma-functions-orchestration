@@ -1,0 +1,64 @@
+apiVersion: serverless.kyma-project.io/v1alpha2
+kind: Function
+metadata:
+    labels:
+        app.kubernetes.io/name: fun2-inline-python
+    name: fun2-inline-python
+    namespace: default
+spec:
+    env:
+        - name: PUSH_EVENT_TYPE
+          valueFrom:
+            configMapKeyRef:
+                key: fun2-publish-event-type
+                name: workflow-config
+    resourceConfiguration:
+        function:
+            resources:
+                limits:
+                    cpu: 500m
+                    memory: 600Mi
+                requests:
+                    cpu: 20m
+                    memory: 124Mi
+        build:
+            resources:
+                limits:
+                    cpu: 500m
+                    memory: 500Mi
+                requests:
+                    cpu: 100m
+                    memory: 124Mi
+    runtime: python312
+    source:
+        inline:
+            source: |-
+                import os
+                import datetime
+                import json
+
+                def main(event, context):
+                    payload=event['data']
+                    if isinstance(payload, (bytes, bytearray)):
+                        payload=json.loads(str(payload, "utf-8"))
+                    checkin=payload['check_in']
+                    fibo=payload['fibo']
+                    checkin['fun2']=datetime.datetime.now().isoformat()
+                    fibo['fun2']=recur_fibo(10)
+                    extensions = event['extensions']
+                    print(extensions)
+                    request = extensions['request']
+                    print(request)
+                    eventSource = request.get_header('ce-source')
+                    print(eventSource)
+                    eventType = os.environ['PUSH_EVENT_TYPE']
+                    event.emitCloudEvent(eventType, eventSource, payload)
+                    print(payload)
+                    return "OK"
+
+
+                def recur_fibo(n):
+                   if n <= 1:
+                       return n
+                   else:
+                       return(recur_fibo(n-1) + recur_fibo(n-2))

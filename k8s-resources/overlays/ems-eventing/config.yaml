@@ -1,6 +1,0 @@
-  apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    name: load-config
-  data: 
-    targetUrl: "https://input.c-8e76d7c.stage.kyma.ondemand.com"

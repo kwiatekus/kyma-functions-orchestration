@@ -1,0 +1,8 @@
+resources:
+- fun0-http-mjs.yaml
+- fun1-inline-node.yaml
+- fun2-inline-python.yaml
+- fun3-git-node-public.yaml
+- fun4-azuredevops-node-ssh.yaml
+- fun5-azuredevops-node-basic.yaml
+- fun6-finish.yaml

@@ -1,0 +1,10 @@
+apiVersion: eventing.kyma-project.io/v1alpha2
+kind: Subscription
+metadata:
+    name: fun6-finish
+    namespace: default
+spec:
+    sink: http://fun6-finish.default.svc.cluster.local
+    source: "testapp"
+    types:
+    - ready.for.fun6.v1

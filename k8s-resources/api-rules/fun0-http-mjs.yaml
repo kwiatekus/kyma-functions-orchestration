@@ -1,0 +1,15 @@
+apiVersion: gateway.kyma-project.io/v2
+kind: APIRule
+metadata:
+  name: fun0-http-mjs
+spec:
+  hosts:
+  - start
+  service:
+    name: fun0-http-mjs
+    port: 80
+  gateway: kyma-system/kyma-gateway
+  rules:
+  - path: /*
+    methods: ["GET"]
+    noAuth: true
