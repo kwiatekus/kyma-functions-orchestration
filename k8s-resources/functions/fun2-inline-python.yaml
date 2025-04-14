@@ -39,20 +39,15 @@ spec:
 
                 def main(event, context):
                     payload=event['data']
-                    if isinstance(payload, (bytes, bytearray)):
-                        payload=json.loads(str(payload, "utf-8"))
                     checkin=payload['check_in']
                     fibo=payload['fibo']
                     checkin['fun2']=datetime.datetime.now().isoformat()
                     fibo['fun2']=recur_fibo(10)
-                    extensions = event['extensions']
-                    request = extensions['request']
-                    eventSource = request.get_header('ce-source')
+                    eventSource = event['ce-source']
                     eventType = os.environ['PUSH_EVENT_TYPE']
-                    event.emitCloudEvent(eventType, eventSource, payload)
-                    print(payload)
+                    # datacontenttype is needed as CE sdk for python is not detecting it ootb
+                    event.emitCloudEvent(eventType, eventSource, payload, {'datacontenttype': 'application/json'})
                     return "OK"
-
 
                 def recur_fibo(n):
                    if n <= 1:
