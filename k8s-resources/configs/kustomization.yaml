@@ -1,0 +1,8 @@
+generatorOptions:
+  disableNameSuffixHash: true
+configmapGenerator:
+- name: my-config
+  envs:
+  - my-config.env
+    
+

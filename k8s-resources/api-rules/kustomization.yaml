@@ -1,2 +1,4 @@
 resources:
 - fun0-http-mjs.yaml
+- fun7-secret-mount.yaml
+- fun8-inject-envs.yaml

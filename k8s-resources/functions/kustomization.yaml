@@ -6,3 +6,5 @@ resources:
 - fun4-azuredevops-node-ssh.yaml
 - fun5-azuredevops-node-basic.yaml
 - fun6-finish.yaml
+- fun7-secret-mount.yaml
+- fun8-inject-envs.yaml

@@ -2,7 +2,9 @@ resources:
 - namespaces.yaml
 - workflow-config.yaml
 - function-computation-config.yaml
+- configs
 - secrets
 - functions
 - api-rules
 - subscriptions
+

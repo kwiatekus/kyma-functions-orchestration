@@ -2,3 +2,4 @@ src/archived/**
 *.env
 **/key
 deploy.sh
+.DS_Store

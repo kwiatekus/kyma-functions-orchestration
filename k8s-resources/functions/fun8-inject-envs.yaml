@@ -1,0 +1,44 @@
+apiVersion: serverless.kyma-project.io/v1alpha2
+kind: Function
+metadata:
+  name: fun8-inject-envs
+spec:
+  env:
+    - name: env1
+      value: I come from function definition
+    - name: env2
+      valueFrom:
+        configMapKeyRef:
+          key: config-env
+          name: my-config
+    - name: env3
+      valueFrom:
+        secretKeyRef:
+          key: secret-env
+          name: my-secret
+  runtime: nodejs22
+  source:
+    inline:
+      source: |-
+        module.exports = {
+            main: function (event, context) {
+                result = {}
+                envs = ["env1", "env2", "env3"]
+                envs.forEach(function(key){
+                    console.log(key+":"+readEnv(key))
+                    result[key]=readEnv(key)
+                });
+                return result
+            }
+        }
+        readEnv=(envKey) => {
+            if(envKey){
+                return process.env[envKey];
+            }
+            return
+        }
+  resourceConfiguration:
+    function:
+      profile: S
+    build:
+      profile: slow
